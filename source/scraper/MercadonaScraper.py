@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement 
 from selenium.webdriver.common.keys import Keys
 import time
-from models.Product import Product
+from models.product import Product
 
 class MercadonaScraper():
 
@@ -86,16 +86,18 @@ class MercadonaScraper():
 
         return products
 
-    def get_product(self, buttom:WebElement) -> Product:
+    def get_product(self, button:WebElement) -> Product:
 
         try:
-            buttom.click()
+            button.click()
             time.sleep(1)
             product = self.get_product_information()
         except Exception as ex:
             print("Exception: {0}".format(ex))
-            self.try_close_retries_windows(buttom)
-            product = self.get_product_information()
+            self.try_close_retries_windows()
+            close_product_button = self.driver.find_element(By.XPATH, '//button[@data-test="modal-close-button"]')
+            close_product_button.click()
+            product = self.get_product(button)
 
         close_product_button = self.driver.find_element(By.XPATH, '//button[@data-test="modal-close-button"]')
         close_product_button.click()
@@ -140,23 +142,21 @@ class MercadonaScraper():
             product_unit,
             product_price_by_unit)
     
-    def try_close_retries_windows(self, buttom:WebElement):
+    def try_close_retries_windows(self):
 
         if(self.is_contains_retries_windows()):
             self.delay_time += 1
             print("Retry with delay {}".format(self.delay_time))
             time.sleep(self.delay_time)
-            close_product_button = self.driver.find_element(By.XPATH, '//button[@data-test="modal-close-button"]')
-            close_product_button.click()
-            buttom.click()
 
     def is_contains_retries_windows(self):
 
-        retries_windows = self.driver.find_elements(By.XPATH, '//div[contains(@aria-label, "Operación no realizada")]')
+        button = self.driver.find_elements(By.XPATH, '//button[contains(text(), "Entendido")]')
 
-        if(retries_windows and len(retries_windows) > 0):
-            button = retries_windows[0].find_element(By.TAG_NAME, 'button')
-            button.click()
+        if(button and len(button) > 0):
+            print("Va a clickar botón de entendido")
+            button[0].click()
+            print("Se ha clickado")
             time.sleep(1)
             return True
     

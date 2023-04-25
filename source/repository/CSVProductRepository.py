@@ -1,5 +1,5 @@
 import csv
-from models.Product import Product
+from models.product import Product
 
 class CSVProductRepository:
     def __init__(self, filename):  
