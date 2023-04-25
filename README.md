@@ -33,9 +33,9 @@ Breve desripción de la práctica/sitio web elegido.
 
 ## Publicación en Zenodo
 
-El dataset ha sido publicado en Zenodo con DOI [10.5281/zenodo.0000000](https://doi.org/10.5281/zenodo.0000000).
+El dataset ha sido publicado en Zenodo con DOI [10.5281/zenodo.7864593](https://doi.org/10.5281/zenodo.7864593).
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.0000000.svg)](https://doi.org/10.5281/zenodo.0000000)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7864593.svg)](https://doi.org/10.5281/zenodo.7864593)
 
 ## Vídeo de presentación
 
