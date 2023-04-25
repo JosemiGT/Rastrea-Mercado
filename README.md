@@ -22,13 +22,14 @@ URL del sitio web elegido: https://tienda.mercadona.es/
 Breve desripción de la práctica/sitio web elegido.
 
   * `memoria.pdf`: Documento de respuestas.
-  * `/source/scraper.py`: Archivo principal.
-  * `/source/scraper_aux.py`: Descripción archivo.
-  * (...)
+  * `/source/scraper/MercadonaScraper.py`: Clase para controlar la nevegación en la página de mercadona mediante selenium para obtener información.
+  * `/source/models/product.py`: Clase modelo de producto para guardar la información.
+  * `/source/repository/CSVProductRepository.py`: Clase de repositorio para guardar los productos en un fichero CSV.
+  * `/source/scraper_api/scraper.py`: Módulo que contiene la lógica para obtener datos de productos desde la API.
+  * `/source/scraper_api/scraper_aux.py`: Módulo que contiene funciones auxiliares que se utilizan en scraper.py para obtener información mediante la API de mercadonaI.
   * `/source/requirements.txt`: Lista de paquetes utilizados (Python 3.10).
-  * `/dataset/collected_data_1.csv`: Descripción archivo.
-  * `/dataset/collected_data_2.csv`: Descripción archivo.
-  * (...)
+  * `/dataset/20230424_datos_mercadona.csv`: DataSet con todos el conjunto de datos obtenido de los productos de la web de mercadona.
+  * `/dataset/20230424_datos_mercadona_api.csv`: DataSet con todos el conjunto de datos obtenido de los productos de la api de mercadona.
 
 ## Publicación en Zenodo
 
