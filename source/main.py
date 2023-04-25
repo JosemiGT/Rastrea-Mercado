@@ -22,10 +22,23 @@ if __name__ == "__main__":
         time.sleep(2)
         mercadona_scraper.navigate_to_categories()
 
-        products = mercadona_scraper.get_all_product_page()
+        categories_groups = mercadona_scraper.get_all_groups_categories()
+
+        there_are_next_category = True
+        there_are_next_group = True
+        products = []
+
+        for group in categories_groups:
+            while(there_are_next_category):
+                products.extend(mercadona_scraper.get_all_product_page()) 
+                there_are_next_category = mercadona_scraper.navigate_to_next_categories()
+
+            mercadona_scraper.navigate_to_next_group_categories(group)
+            there_are_next_category = True
+
         product_repository.save_products(products)
         mercadona_scraper.close_the_browser()
         
     except:
-        # mercadona_scraper.close_the_browser()
+        mercadona_scraper.close_the_browser()
         raise

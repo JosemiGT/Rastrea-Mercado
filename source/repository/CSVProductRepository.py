@@ -8,9 +8,16 @@ class CSVProductRepository:
     def save_products(self, products:list[Product]):
 
         with open(self.filename, mode='w', newline='') as csv_file:
-              
+
             writer = csv.writer(csv_file)  
-            writer.writerow(['Grupo', 'Categoría', 'Nombre', 'Precio'])
+            writer.writerow(['Grupo', 'Categoría', 'Nombre', 'Precio', 'Cantidad', 'unidad de medida', 'Precio por und. medida'])
 
             for product in products:  
-                writer.writerow([product.group_name, product.category_name, product.product_name, product.product_price])  
+                writer.writerow([
+                    product.group_name, 
+                    product.category_name, 
+                    product.product_name, 
+                    product.product_price, 
+                    product.product_amount, 
+                    product.product_unit, 
+                    product.product_price_by_unit])  
