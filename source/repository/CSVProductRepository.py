@@ -4,13 +4,33 @@ from models.Product import Product
 class CSVProductRepository:
     def __init__(self, filename):  
         self.filename = filename  
-          
+
+    def insert_headers(self):
+
+         with open(self.filename, 'w', newline='', encoding='utf8') as csv_file:
+
+            field_names = ['Grupo', 
+                           'Categoria', 
+                           'Nombre', 
+                           'Precio', 
+                           'Cantidad', 
+                           'unidad-medida', 
+                           'Precio-und-medida']
+            
+            csv_writer = csv.DictWriter(
+            csv_file, 
+            delimiter=',',
+            fieldnames=field_names,
+            quotechar='"', 
+            quoting=csv.QUOTE_MINIMAL)
+            
+            csv_writer.writeheader() 
+
     def save_products(self, products:list[Product]):
 
-        with open(self.filename, mode='w', newline='') as csv_file:
+        with open(self.filename, mode='a', newline='', encoding='utf8') as csv_file:
 
             writer = csv.writer(csv_file)  
-            writer.writerow(['Grupo', 'Categoría', 'Nombre', 'Precio', 'Cantidad', 'unidad de medida', 'Precio por und. medida'])
 
             for product in products:  
                 writer.writerow([

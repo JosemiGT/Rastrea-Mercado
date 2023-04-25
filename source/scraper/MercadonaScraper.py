@@ -12,6 +12,7 @@ class MercadonaScraper():
 
     def __init__(self, postal_code:int):
         self.url:str = "https://tienda.mercadona.es/"
+        self.delay_time = 5
         self.postal_code:int = postal_code
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -87,8 +88,21 @@ class MercadonaScraper():
 
     def get_product(self, buttom:WebElement) -> Product:
 
-        buttom.click()
-        time.sleep(1)
+        try:
+            buttom.click()
+            time.sleep(1)
+            product = self.get_product_information()
+        except Exception as ex:
+            print("Exception: {0}".format(ex))
+            self.try_close_retries_windows(buttom)
+            product = self.get_product_information()
+
+        close_product_button = self.driver.find_element(By.XPATH, '//button[@data-test="modal-close-button"]')
+        close_product_button.click()
+
+        return product
+    
+    def get_product_information(self) -> Product:
 
         group_name = ""
         group_name_elements = self.driver.find_elements(By.XPATH, '//span[@class="subhead1-r"]')
@@ -117,9 +131,6 @@ class MercadonaScraper():
         product_unit = div_product_information_text[0]
         product_price_by_unit = div_product_information_text[1]
 
-        close_product_button = self.driver.find_element(By.XPATH, '//button[@data-test="modal-close-button"]')
-        close_product_button.click()
-
         return Product(
             group_name, 
             group_category, 
@@ -128,6 +139,28 @@ class MercadonaScraper():
             product_amount,
             product_unit,
             product_price_by_unit)
+    
+    def try_close_retries_windows(self, buttom:WebElement):
+
+        if(self.is_contains_retries_windows()):
+            self.delay_time += 1
+            print("Retry with delay {}".format(self.delay_time))
+            time.sleep(self.delay_time)
+            close_product_button = self.driver.find_element(By.XPATH, '//button[@data-test="modal-close-button"]')
+            close_product_button.click()
+            buttom.click()
+
+    def is_contains_retries_windows(self):
+
+        retries_windows = self.driver.find_elements(By.XPATH, '//div[contains(@aria-label, "Operación no realizada")]')
+
+        if(retries_windows and len(retries_windows) > 0):
+            button = retries_windows[0].find_element(By.TAG_NAME, 'button')
+            button.click()
+            time.sleep(1)
+            return True
+    
+        return False
 
     def wait_for_page_to_load(self):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))

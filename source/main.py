@@ -16,29 +16,25 @@ if __name__ == "__main__":
     product_repository = CSVProductRepository(
         date_string + "_" + OUTPUT_FILE)
     
-    try:
-        mercadona_scraper.complete_postal_code()
-        mercadona_scraper.accept_cookies()
-        time.sleep(2)
-        mercadona_scraper.navigate_to_categories()
+    product_repository.insert_headers()
+    mercadona_scraper.complete_postal_code()
+    mercadona_scraper.accept_cookies()
+    time.sleep(2)
+    mercadona_scraper.navigate_to_categories()
 
-        categories_groups = mercadona_scraper.get_all_groups_categories()
+    categories_groups = mercadona_scraper.get_all_groups_categories()
+
+    there_are_next_category = True
+    there_are_next_group = True
+
+    for group in categories_groups:
+        
+        mercadona_scraper.navigate_to_next_group_categories(group)
+
+        while(there_are_next_category):
+            product_repository.save_products(mercadona_scraper.get_all_product_page())
+            there_are_next_category = mercadona_scraper.navigate_to_next_categories()
 
         there_are_next_category = True
-        there_are_next_group = True
-        products = []
 
-        for group in categories_groups:
-            while(there_are_next_category):
-                products.extend(mercadona_scraper.get_all_product_page()) 
-                there_are_next_category = mercadona_scraper.navigate_to_next_categories()
-
-            mercadona_scraper.navigate_to_next_group_categories(group)
-            there_are_next_category = True
-
-        product_repository.save_products(products)
-        mercadona_scraper.close_the_browser()
-        
-    except:
-        mercadona_scraper.close_the_browser()
-        raise
+    mercadona_scraper.close_the_browser()
