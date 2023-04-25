@@ -28,14 +28,14 @@ Breve desripción de la práctica/sitio web elegido.
   * `/source/scraper_api/scraper.py`: Módulo que contiene la lógica para obtener datos de productos desde la API.
   * `/source/scraper_api/scraper_aux.py`: Módulo que contiene funciones auxiliares que se utilizan en scraper.py para obtener información mediante la API de mercadonaI.
   * `/source/requirements.txt`: Lista de paquetes utilizados (Python 3.10).
-  * `/dataset/20230424_datos_mercadona.csv`: DataSet con todos el conjunto de datos obtenido de los productos de la web de mercadona.
+  * `/dataset/20230425_datos_mercadona.csv`: DataSet con todos el conjunto de datos obtenido de los productos de la web de mercadona.
   * `/dataset/20230424_datos_mercadona_api.csv`: DataSet con todos el conjunto de datos obtenido de los productos de la api de mercadona.
 
 ## Publicación en Zenodo
 
-El dataset ha sido publicado en Zenodo con DOI [10.5281/zenodo.7864593](https://doi.org/10.5281/zenodo.7864593).
+El dataset ha sido publicado en Zenodo con DOI [10.5281/zenodo.7864711](https://doi.org/10.5281/zenodo.7864711).
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7864593.svg)](https://doi.org/10.5281/zenodo.7864593)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7864711.svg)](https://doi.org/10.5281/zenodo.7864711)
 
 ## Vídeo de presentación
 
